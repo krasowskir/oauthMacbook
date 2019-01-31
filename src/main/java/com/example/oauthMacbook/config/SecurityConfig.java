@@ -19,11 +19,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("richard")
-                .password(passwordEncoder.encode("meinPasswort123"))
-                .roles("USER")
+                    .withUser("richard")
+                    .password(passwordEncoder.encode("meinPasswort123"))
+                    .roles("USER")
                 .and()
-                .passwordEncoder(new BCryptPasswordEncoder());
+                    .withUser("toni")
+                    .password(passwordEncoder.encode("flusensieb"))
+                    .roles("TEST")
+                .and()
+                .passwordEncoder(passwordEncoder);
 
     }
 
@@ -36,14 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .regexMatchers("/.*").access("hasRole('USER')")
                 .regexMatchers("/oauth/authorize").access("hasRole('USER')")
-                .and().httpBasic()
+                .regexMatchers("/oauth/token").access("hasRole('USER')")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .and()
-                .csrf().disable();
-
-
+                .and().httpBasic();
     }
 }

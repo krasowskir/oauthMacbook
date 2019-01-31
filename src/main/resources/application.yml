@@ -1,3 +1,6 @@
+logging:
+ level:
+  root: DEBUG
 security:
  user:
   name: root
@@ -6,3 +9,4 @@ security:
   client:
    client_id: richard
    client-secret: meinPasswort123
+   scope: read
