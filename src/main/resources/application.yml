@@ -1,12 +1,20 @@
 logging:
  level:
   root: DEBUG
-security:
- user:
-  name: root
-  password: test123
- oauth2:
-  client:
-   client_id: richard
-   client-secret: meinPasswort123
-   scope: read
+management:
+ endpoints:
+  web:
+   exposure:
+    include: beans
+ endpoint:
+  enabled-by-default: true
+
+#security:
+# user:
+#  name: root
+#  password: test123
+# oauth2:
+#  client:
+#   client_id: richard
+#   client-secret: meinPasswort123
+#   scope: read
