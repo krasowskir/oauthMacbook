@@ -1,6 +1,8 @@
 logging:
  level:
-  root: DEBUG
+  root: INFO
+  org:
+   springframework: INFO
 management:
  endpoints:
   web:
@@ -8,6 +10,19 @@ management:
     include: beans
  endpoint:
   enabled-by-default: true
+
+spring:
+ datasource:
+  driver-class-name: org.postgresql.Driver
+  platform: postgres
+  url: jdbc:postgresql://localhost:5432/users
+  username: richard
+  password: test123
+ jpa:
+  database-platform: org.hibernate.dialect.PostgreSQLDialect
+  generate-ddl: true
+
+
 
 #security:
 # user:

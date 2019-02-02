@@ -1,42 +1,35 @@
 package com.example.oauthMacbook.config;
 
+import com.example.oauthMacbook.service.MeinUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private MeinUserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
-                    .withUser("richard")
-                    .password(passwordEncoder.encode("meinPasswort123"))
-                    .roles("USER")
-                .and()
-                    .withUser("toni")
-                    .password(passwordEncoder.encode("flusensieb"))
-                    .roles("TEST")
-                .and()
-                .passwordEncoder(passwordEncoder);
+            .userDetailsService(userService)
+            .passwordEncoder(passwordEncoder);
     }
 
-
-
     @Bean
-    public PasswordEncoder getPasswordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -44,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .regexMatchers(HttpMethod.POST,"/.*").access("hasRole('USER')")
+                .regexMatchers("/endpunkt/test").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

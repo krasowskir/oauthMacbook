@@ -1,0 +1,1 @@
+# docker exec -it --user postgres b3d9bb0b159d psql -d users -U richard
