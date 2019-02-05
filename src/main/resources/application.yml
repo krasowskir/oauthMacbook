@@ -2,7 +2,9 @@ logging:
  level:
   root: INFO
   org:
-   springframework: INFO
+   springframework:
+    security: DEBUG
+
 management:
  endpoints:
   web:
@@ -24,12 +26,10 @@ spring:
 
 
 
-#security:
-# user:
-#  name: root
-#  password: test123
-# oauth2:
-#  client:
-#   client_id: richard
-#   client-secret: meinPasswort123
-#   scope: read
+security:
+ oauth2:
+  client:
+   client_id: richard
+   client-secret: meinPasswort123
+   accessTokenUri: http://localhost:8080/oauth/token
+   userAuthorizationUri: http://localhost:8080/oauth/authorize

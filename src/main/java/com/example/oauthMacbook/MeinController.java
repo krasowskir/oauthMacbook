@@ -12,6 +12,4 @@ public class MeinController {
 
         return HttpStatus.OK;
     }
-
-
 }

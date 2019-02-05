@@ -10,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,17 +24,13 @@ public class MeinUserService implements UserDetailsService{
     @Autowired
     private MeinUserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-
 
     @Transactional
     public User saveUser(User toSave){
         try {
             User toPersist = new User();
             toPersist.setUsername(toSave.getUsername());
-            toPersist.setPassword(passwordEncoder.encode(toSave.getPassword()));
+            toPersist.setPassword(toSave.getPassword());
             return userRepository.save(toPersist);
         } catch (Exception e){
             LOGGER.error(String.format("Speichern des Users %s hat nicht geklappt", toSave), e );

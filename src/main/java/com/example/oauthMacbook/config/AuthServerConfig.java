@@ -2,15 +2,19 @@ package com.example.oauthMacbook.config;
 
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
+@EnableOAuth2Client
 @EnableAuthorizationServer
 @Configuration
 public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
+
 
 
     @Override
@@ -18,8 +22,12 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
         oauthServer
                 .tokenKeyAccess("permitAll()")
-                .checkTokenAccess("permitAll()")
-                .passwordEncoder(new BCryptPasswordEncoder());
+                .checkTokenAccess("permitAll()");
+    }
+
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.allowedTokenEndpointRequestMethods(HttpMethod.POST);
     }
 
     @Override
@@ -27,19 +35,11 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
         clients
                 .inMemory()
-                .withClient("web_app")
-                .secret("testiTest")
-                .scopes("read")
-                .authorities("ROLE_CLIENT")
-                .authorizedGrantTypes("authorization_code", "refresh_token", "implicit", "password")
-                .autoApprove(true)
-                .redirectUris("http://example.com")
-                .and()
-                .withClient("toni")
-                .secret("flusensieb")
+                .withClient("richard")
+                .secret("meinPasswort123")
                 .scopes("read", "write")
                 .authorities("ROLE_CLIENT")
-                .authorizedGrantTypes("authorization_code", "refresh_token", "implicit")
-                .autoApprove(true);
+                .authorizedGrantTypes("authorization_code", "client_credentials", "implicit")
+                .redirectUris("http://example.com");
     }
 }
