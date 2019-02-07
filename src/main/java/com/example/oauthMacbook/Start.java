@@ -56,12 +56,9 @@ public class Start {
             System.out.println(elem.getFilters());
         }
 
-
         //PasswordEncoder encoder = new BCryptPasswordEncoder();
         User richard = new User("richard", "test123");
         User toni = new User("toni", "flusensieb");
-
-
 
         meinUserService.saveUser(richard);
         meinUserService.saveUser(toni);
