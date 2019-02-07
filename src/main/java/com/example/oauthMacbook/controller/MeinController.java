@@ -1,4 +1,4 @@
-package com.example.oauthMacbook;
+package com.example.oauthMacbook.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;

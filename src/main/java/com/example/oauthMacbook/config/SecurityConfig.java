@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 @Order(2)
 @EnableWebSecurity
@@ -45,12 +46,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .regexMatchers("/login").permitAll()
                 .regexMatchers("/endpunkt/test").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                .formLogin().loginPage("/login").successForwardUrl("/meineSeite")
+                .and().logout()
+
+                // .logoutSuccessUrl("/login") wohin man den user nach dem logout redirecten möchte
+
+                .and()
+                .rememberMe()
+                 .tokenValiditySeconds(2419200)
+                 .key("richardsKey")
                 .and()
                 .addFilterAfter(new RichardsFilter(), LogoutFilter.class)
+                //auskommentieren, um das zu aktivieren. Dafür braucht man dann ein csrf token Repository
                 .csrf().disable();
     }
 
