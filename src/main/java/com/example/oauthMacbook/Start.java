@@ -1,6 +1,8 @@
 package com.example.oauthMacbook;
 
+import com.example.oauthMacbook.domain.Client;
 import com.example.oauthMacbook.domain.User;
+import com.example.oauthMacbook.service.MeinClientService;
 import com.example.oauthMacbook.service.MeinUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,9 @@ public class Start {
 
     @Autowired
     private MeinUserService meinUserService;
+
+    @Autowired
+    private MeinClientService meinClientService;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -60,8 +65,12 @@ public class Start {
         User richard = new User("richard", "test123");
         User toni = new User("toni", "flusensieb");
 
+        Client richClient = new Client("richard", "meinPasswort123");
+
         meinUserService.saveUser(richard);
         meinUserService.saveUser(toni);
+
+        meinClientService.saveClient(richClient);
 
     }
 
