@@ -49,8 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .regexMatchers("/login").permitAll()
                 .regexMatchers("/endpunkt/test").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/login").successForwardUrl("/meineSeite")
+                .and() //.loginPage("/login")
+                .formLogin().successForwardUrl("/meineSeite")
                 .and().logout()
 
                 // .logoutSuccessUrl("/login") wohin man den user nach dem logout redirecten möchte

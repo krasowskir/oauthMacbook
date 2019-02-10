@@ -28,7 +28,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
                 .secret("meinPasswort123")
                 .scopes("read", "write")
                 .authorities("ROLE_CLIENT")
-                .authorizedGrantTypes("authorization_code", "client_credentials", "implicit")
+                .authorizedGrantTypes("authorization_code", "client_credentials")
                 .redirectUris("http://example.com");
     }
 }
