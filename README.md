@@ -20,8 +20,12 @@ docker exec -it 3df6bc2a96a2 psql -U richard -d users -f /schema.sql
 
 ## scripts
 ```
-docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=test123 -e POSTGRES_USER=richard postgres_with_scripts
-docker exec -it 3df6bc2a96a2 psql -U richard -f /schema.sql
+docker build . --tag postgres_oauth
+docker rmi postgres_oauth
+docker stop postgres; docker rm postgres
+
+docker run -d -p 5432:5432 --name postgres postgres_oauth
+docker exec -it postgres psql -U richard -d users
 ```
 
 ## API
