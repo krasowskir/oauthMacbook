@@ -5,6 +5,9 @@ logging:
    springframework:
     security: DEBUG
 
+server:
+ port: 8090
+
 management:
  endpoints:
   web:
@@ -13,13 +16,19 @@ management:
  endpoint:
   enabled-by-default: true
 
-spring:
- datasource:
-  driver-class-name: org.postgresql.Driver
-  platform: postgres
-  url: jdbc:postgresql://localhost:5432/users
+database:
+ db:
+  host: localhost
+  port: 5432
   username: richard
   password: test123
- jpa:
-  database-platform: org.hibernate.dialect.PostgreSQLDialect
-  generate-ddl: true
+#spring:
+# datasource:
+#  driver-class-name: org.postgresql.Driver
+#  platform: postgres
+#  url: jdbc:postgresql://localhost:5432/users
+#  username: richard
+#  password: test123
+# jpa:
+#  database-platform: org.hibernate.dialect.PostgreSQLDialect
+#  generate-ddl: true
