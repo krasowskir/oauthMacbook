@@ -1,6 +1,6 @@
 # Documentation
 basiert auf basis von spring-security 5.1 
-https://docs.spring.io/spring-security/site/docs/5.2.15.RELEASE/reference/html5/#samples
+https://docs.spring.io/spring-security-oauth2-boot/docs/2.5.2/reference/html5/
 
 ## wichtige Objekte
 - UserDetailsService
@@ -29,6 +29,8 @@ docker exec -it postgres psql -U richard -d users
 ```
 
 ## API
+
+### register client
 ```
 curl --location --request POST 'http://localhost:8090/registration/client/123' \
 --header 'Authorization: Bearer 84ec9ead-99b0-4578-8262-d8d390aa05ee' \
@@ -39,4 +41,13 @@ curl --location --request POST 'http://localhost:8090/registration/client/123' \
 }'
 ```
 
+### exchange client_credentials for access_token
+```
+curl -iX POST 'http://localhost:8090/oauth/token?grant_type=client_credentials&scope=read' -u 'richard:pelikan' --header 'Content-Type: application/json'
+```
 
+
+### validate access_token
+```
+curl -iX POST "http://localhost:8090/oauth/check_token?token=byvcZ6-U0SSCQMuDLDoaErYOMdU" -u 'richard:pelikan' 
+```

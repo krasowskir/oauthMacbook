@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 
 import javax.sql.DataSource;
@@ -32,6 +31,8 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Value("${database.db.password}")
     private String password;
+
+    private PasswordEncoder passwordEncoder;
 
 //    @Autowired
 //    private MeinClientService meinClientDetailsService;
@@ -66,13 +67,17 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
 
         oauthServer
+                .passwordEncoder(bCryptPasswordEncoder())
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("permitAll()");
     }
 
     public PasswordEncoder bCryptPasswordEncoder(){
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder;
+        if (this.passwordEncoder == null){
+            this.passwordEncoder = new BCryptPasswordEncoder();
+        }
+
+        return this.passwordEncoder;
     }
 
     @Bean

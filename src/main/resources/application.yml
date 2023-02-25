@@ -22,13 +22,8 @@ database:
   port: 5432
   username: richard
   password: test123
-#spring:
-# datasource:
-#  driver-class-name: org.postgresql.Driver
-#  platform: postgres
-#  url: jdbc:postgresql://localhost:5432/users
-#  username: richard
-#  password: test123
-# jpa:
-#  database-platform: org.hibernate.dialect.PostgreSQLDialect
-#  generate-ddl: true
+
+security:
+ oauth2:
+  resource:
+   tokenInfoUri: http://localhost:8090/oauth/check_token
